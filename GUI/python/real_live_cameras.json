@@ -1,0 +1,6 @@
+{
+  "mjpeg_cameras": [],
+  "refresh_rate_ms": 5000,
+  "type": "mjpeg",
+  "implementation": "Use img tag with periodic src refresh"
+}

@@ -1,0 +1,586 @@
+/* ── Layout ────────────────────────────────────────────────── */
+.video-test-layout {
+  display: flex;
+  min-height: 100vh;
+  background: var(--color-background, #202a37);
+  color: var(--color-text-primary, #fff);
+  font-family: 'Inter', 'Roboto', sans-serif;
+}
+
+.video-test-main {
+  flex: 1;
+  padding: 32px 28px;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+/* ── Header ─────────────────────────────────────────────────── */
+.vt-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.vt-title {
+  font-size: 22px;
+  font-weight: 700;
+  margin: 0 0 4px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: #fff;
+}
+
+.vt-title .material-symbols-outlined {
+  font-size: 26px;
+  color: #0071bc;
+}
+
+.vt-subtitle {
+  font-size: 13px;
+  color: #aeb0b5;
+  margin: 0;
+}
+
+.vt-badge {
+  background: #1a3a5c;
+  color: #5ba4f5;
+  font-size: 11px;
+  font-weight: 600;
+  padding: 4px 12px;
+  border-radius: 20px;
+  border: 1px solid #2a5080;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  align-self: flex-start;
+  margin-top: 4px;
+}
+
+/* ── Body grid ──────────────────────────────────────────────── */
+.vt-body {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+  align-items: start;
+}
+
+@media (max-width: 900px) {
+  .vt-body { grid-template-columns: 1fr; }
+}
+
+/* ── Glass panel base ───────────────────────────────────────── */
+.glass-panel {
+  background: #2a3441;
+  border: 1px solid rgba(255,255,255,0.07);
+  border-radius: 12px;
+}
+
+/* ── Left column ────────────────────────────────────────────── */
+.vt-left {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+/* Drop zone */
+.vt-dropzone {
+  min-height: 220px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  cursor: pointer;
+  transition: border-color 0.2s, background 0.2s;
+  border: 2px dashed rgba(255,255,255,0.12);
+  padding: 32px;
+}
+
+.vt-dropzone:hover,
+.vt-dropzone--active {
+  border-color: #0071bc;
+  background: rgba(0, 113, 188, 0.08);
+}
+
+.vt-drop-icon {
+  font-size: 48px;
+  color: #0071bc;
+}
+
+.vt-drop-title {
+  font-size: 15px;
+  font-weight: 600;
+  margin: 0;
+}
+
+.vt-drop-sub {
+  font-size: 12px;
+  color: #aeb0b5;
+  margin: 0;
+}
+
+/* Player */
+.vt-player-wrap {
+  padding: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.vt-player {
+  width: 100%;
+  border-radius: 8px;
+  background: #000;
+  max-height: 260px;
+  object-fit: contain;
+}
+
+.vt-file-meta {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 12px;
+  color: #aeb0b5;
+  padding: 0 4px;
+}
+
+.vt-file-meta .material-symbols-outlined {
+  font-size: 16px;
+  color: #0071bc;
+}
+
+.vt-file-name {
+  flex: 1;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  color: #e0e0e0;
+}
+
+.vt-file-size { color: #aeb0b5; }
+
+/* API toggle row */
+.vt-api-row {
+  padding: 14px 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.vt-toggle-label {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  cursor: pointer;
+  font-size: 13px;
+  user-select: none;
+}
+
+.vt-toggle {
+  width: 40px;
+  height: 22px;
+  border-radius: 11px;
+  background: #3a4455;
+  position: relative;
+  transition: background 0.2s;
+  flex-shrink: 0;
+}
+
+.vt-toggle--on { background: #0071bc; }
+
+.vt-toggle-knob {
+  position: absolute;
+  top: 3px;
+  left: 3px;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: #fff;
+  transition: transform 0.2s;
+}
+
+.vt-toggle--on .vt-toggle-knob { transform: translateX(18px); }
+
+.vt-input {
+  width: 100%;
+  background: #1e2733;
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 6px;
+  color: #fff;
+  font-size: 12px;
+  padding: 8px 10px;
+  outline: none;
+  box-sizing: border-box;
+}
+
+.vt-input:focus { border-color: #0071bc; }
+
+.vt-api-note {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 11px;
+  color: #aeb0b5;
+  margin: 0;
+}
+
+.vt-api-note .material-symbols-outlined { font-size: 14px; }
+
+/* Analyze button */
+.vt-btn-analyze {
+  width: 100%;
+  padding: 14px;
+  border-radius: 8px;
+  background: #0071bc;
+  color: #fff;
+  font-size: 14px;
+  font-weight: 600;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  transition: background 0.2s, transform 0.1s;
+}
+
+.vt-btn-analyze:hover:not(.vt-btn-analyze--disabled) {
+  background: #0058a0;
+  transform: translateY(-1px);
+}
+
+.vt-btn-analyze--disabled {
+  background: #2a3441;
+  color: #5a6372;
+  cursor: not-allowed;
+  border: 1px solid rgba(255,255,255,0.08);
+}
+
+.vt-btn-ghost {
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: #aeb0b5;
+  display: flex;
+  align-items: center;
+  padding: 2px;
+  border-radius: 4px;
+}
+
+.vt-btn-ghost:hover { color: #fff; background: rgba(255,255,255,0.1); }
+
+/* ── Right column ───────────────────────────────────────────── */
+.vt-right {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+/* Pipeline status */
+.vt-pipeline {
+  padding: 20px;
+}
+
+.vt-section-title {
+  font-size: 13px;
+  font-weight: 600;
+  color: #aeb0b5;
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+  margin: 0 0 16px;
+}
+
+.vt-stages {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.vt-stage {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 12px;
+  border-radius: 8px;
+  border: 1px solid transparent;
+  transition: background 0.2s, border-color 0.2s;
+}
+
+.vt-stage--active {
+  background: rgba(0, 113, 188, 0.12);
+  border-color: rgba(0, 113, 188, 0.3);
+}
+
+.vt-stage--done {
+  background: rgba(46, 133, 64, 0.08);
+  border-color: rgba(46, 133, 64, 0.2);
+}
+
+.vt-stage-icon {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: #1e2733;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  font-size: 13px;
+  font-weight: 600;
+  color: #aeb0b5;
+}
+
+.vt-stage--active .vt-stage-icon { background: #0071bc; color: #fff; }
+.vt-stage--done .vt-stage-icon   { background: #2e8540; color: #fff; }
+
+.vt-stage--done .vt-stage-icon .material-symbols-outlined { font-size: 16px; }
+
+.vt-stage-text {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+}
+
+.vt-stage-name {
+  font-size: 13px;
+  font-weight: 600;
+  color: #e0e0e0;
+}
+
+.vt-stage--active .vt-stage-name { color: #5ba4f5; }
+.vt-stage--done .vt-stage-name   { color: #5dbf71; }
+
+.vt-stage-sub {
+  font-size: 11px;
+  color: #aeb0b5;
+}
+
+/* Progress bar */
+.vt-progress-wrap {
+  margin-top: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.vt-progress-bar {
+  height: 4px;
+  background: #1e2733;
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.vt-progress-fill {
+  height: 100%;
+  background: #0071bc;
+  border-radius: 4px;
+  transition: width 0.4s ease;
+}
+
+.vt-progress-label {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 11px;
+  color: #aeb0b5;
+}
+
+.vt-progress-label .material-symbols-outlined { font-size: 14px; color: #0071bc; }
+
+.vt-idle-hint {
+  margin: 16px 0 0;
+  font-size: 12px;
+  color: #5a6372;
+  text-align: center;
+}
+
+/* ── Triage Report card ─────────────────────────────────────── */
+.vt-report {
+  overflow: hidden;
+}
+
+.vt-report-banner {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 16px 20px;
+  border-radius: 12px 12px 0 0;
+}
+
+.vt-report-banner .material-symbols-outlined {
+  font-size: 28px;
+  color: #fff;
+  flex-shrink: 0;
+}
+
+.vt-alert-level {
+  font-size: 16px;
+  font-weight: 700;
+  color: #fff;
+  margin: 0 0 2px;
+  letter-spacing: 0.5px;
+}
+
+.vt-alert-sub {
+  font-size: 11px;
+  color: rgba(255,255,255,0.8);
+  margin: 0;
+}
+
+.vt-report-body {
+  padding: 16px 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.vt-report-row {
+  display: flex;
+  gap: 12px;
+  align-items: flex-start;
+}
+
+.vt-ri {
+  font-size: 18px;
+  color: #5ba4f5;
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+
+.vt-ri-label {
+  font-size: 10px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+  color: #aeb0b5;
+  margin: 0 0 3px;
+}
+
+.vt-ri-value {
+  font-size: 13px;
+  color: #e0e0e0;
+  margin: 0;
+  line-height: 1.4;
+}
+
+/* Tags */
+.vt-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.vt-tag {
+  font-size: 11px;
+  padding: 3px 10px;
+  border-radius: 20px;
+  font-weight: 500;
+  background: rgba(255,255,255,0.08);
+  color: #aeb0b5;
+}
+
+.vt-tag--warn {
+  background: rgba(253, 184, 30, 0.15);
+  color: #fdb81e;
+  border: 1px solid rgba(253, 184, 30, 0.25);
+}
+
+.vt-tag--blue {
+  background: rgba(0, 113, 188, 0.15);
+  color: #5ba4f5;
+  border: 1px solid rgba(0, 113, 188, 0.25);
+}
+
+/* Severity bar */
+.vt-severity-row {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.vt-severity-bar-wrap {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.vt-severity-bar {
+  flex: 1;
+  height: 6px;
+  background: #1e2733;
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.vt-severity-fill {
+  height: 100%;
+  border-radius: 4px;
+  transition: width 0.6s ease;
+}
+
+.vt-severity-score {
+  font-size: 13px;
+  font-weight: 700;
+  color: #e0e0e0;
+  min-width: 36px;
+  text-align: right;
+}
+
+/* Raw JSON */
+.vt-raw {
+  border-top: 1px solid rgba(255,255,255,0.06);
+  padding-top: 12px;
+  margin-top: 2px;
+}
+
+.vt-raw-toggle {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12px;
+  color: #aeb0b5;
+  cursor: pointer;
+  list-style: none;
+  user-select: none;
+}
+
+.vt-raw-toggle::-webkit-details-marker { display: none; }
+.vt-raw-toggle .material-symbols-outlined { font-size: 15px; }
+
+.vt-raw-pre {
+  margin: 10px 0 0;
+  background: #1a2130;
+  border-radius: 6px;
+  padding: 12px;
+  font-size: 10px;
+  color: #8fbcbb;
+  overflow-x: auto;
+  line-height: 1.5;
+  max-height: 260px;
+  border: 1px solid rgba(255,255,255,0.06);
+}
+
+/* ── Spinner ─────────────────────────────────────────────────── */
+.vt-spinner {
+  width: 16px;
+  height: 16px;
+  border: 2px solid rgba(255,255,255,0.2);
+  border-top-color: #fff;
+  border-radius: 50%;
+  animation: vt-spin 0.7s linear infinite;
+  display: inline-block;
+  flex-shrink: 0;
+}
+
+.vt-spinner--sm {
+  width: 12px;
+  height: 12px;
+}
+
+@keyframes vt-spin {
+  to { transform: rotate(360deg); }
+}

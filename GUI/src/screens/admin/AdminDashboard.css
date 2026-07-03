@@ -1,0 +1,308 @@
+.admin-dashboard-layout {
+  display: flex;
+  min-height: 100vh;
+  background: linear-gradient(135deg, #0a0e14 0%, #151a21 100%);
+  position: relative;
+  overflow: hidden;
+}
+
+/* Animated background */
+.admin-dashboard-layout::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image: 
+    radial-gradient(circle at 20% 30%, rgba(157, 238, 43, 0.08) 1px, transparent 1px),
+    radial-gradient(circle at 80% 70%, rgba(157, 238, 43, 0.08) 1px, transparent 1px),
+    radial-gradient(circle at 40% 80%, rgba(157, 238, 43, 0.06) 1px, transparent 1px);
+  background-size: 50px 50px, 80px 80px, 100px 100px;
+  animation: particleFloat 60s linear infinite;
+  opacity: 0.4;
+  pointer-events: none;
+}
+
+@keyframes particleFloat {
+  0% {
+    transform: translate(0, 0);
+  }
+  100% {
+    transform: translate(50px, 50px);
+  }
+}
+
+.admin-dashboard-main {
+  flex: 1;
+  padding: 2.5rem;
+  position: relative;
+  z-index: 1;
+  overflow-y: auto;
+}
+
+.dashboard-glass-container {
+  padding: 2.5rem;
+  animation: fadeInUp 0.6s ease forwards;
+}
+
+/* Header */
+.dashboard-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 3rem;
+  padding-bottom: 2rem;
+  border-bottom: 1px solid rgba(163, 230, 53, 0.2);
+  animation: fadeInDown 0.6s ease forwards;
+}
+
+.dashboard-title {
+  font-size: 2.5rem;
+  font-weight: 800;
+  color: var(--color-text-primary);
+  margin: 0 0 0.75rem 0;
+  letter-spacing: -0.03em;
+  background: linear-gradient(135deg, #ffffff 0%, var(--color-primary) 50%, #ffffff 100%);
+  background-size: 200% 200%;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  animation: gradientShift 6s ease infinite;
+  position: relative;
+}
+
+.dashboard-title::after {
+  content: '';
+  position: absolute;
+  bottom: -12px;
+  left: 0;
+  width: 80px;
+  height: 4px;
+  background: linear-gradient(90deg, var(--color-primary) 0%, transparent 100%);
+  border-radius: 2px;
+}
+
+@keyframes gradientShift {
+  0%, 100% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+}
+
+.dashboard-subtitle {
+  font-size: 1.125rem;
+  color: var(--color-text-secondary);
+  margin: 0;
+  font-weight: 400;
+}
+
+/* Stats Grid */
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 1.5rem;
+  margin-top: 2rem;
+}
+
+.stat-card {
+  padding: 1.75rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  position: relative;
+  overflow: hidden;
+  animation: fadeInUp 0.6s ease forwards;
+  opacity: 0;
+}
+
+.stat-card:nth-child(1) { animation-delay: 0.1s; }
+.stat-card:nth-child(2) { animation-delay: 0.2s; }
+.stat-card:nth-child(3) { animation-delay: 0.3s; }
+.stat-card:nth-child(4) { animation-delay: 0.4s; }
+.stat-card:nth-child(5) { animation-delay: 0.5s; }
+.stat-card:nth-child(6) { animation-delay: 0.6s; }
+.stat-card:nth-child(7) { animation-delay: 0.7s; }
+.stat-card:nth-child(8) { animation-delay: 0.8s; }
+
+.stat-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 4px;
+  background: linear-gradient(90deg, var(--color-primary) 0%, transparent 100%);
+  opacity: 0;
+  transition: opacity 0.4s ease;
+}
+
+.stat-card:hover {
+  transform: translateY(-8px) scale(1.02);
+  box-shadow: 0 12px 32px rgba(157, 238, 43, 0.25);
+}
+
+.stat-card:hover::before {
+  opacity: 1;
+}
+
+.stat-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+
+.stat-icon {
+  font-size: 2.5rem !important;
+  color: var(--color-primary);
+  filter: drop-shadow(0 0 15px rgba(157, 238, 43, 0.5));
+  transition: all 0.4s ease;
+}
+
+.stat-card:hover .stat-icon {
+  transform: scale(1.15) rotate(5deg);
+  filter: drop-shadow(0 0 20px rgba(157, 238, 43, 0.7));
+}
+
+.stat-trend {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+  font-size: 0.813rem;
+  font-weight: 600;
+  padding: 0.375rem 0.75rem;
+  border-radius: 0.5rem;
+  background: rgba(0, 0, 0, 0.2);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  transition: all 0.3s ease;
+}
+
+.stat-card:hover .stat-trend {
+  transform: scale(1.05);
+}
+
+.trend-icon {
+  font-size: 1rem !important;
+}
+
+/* Trend Colors */
+.trend-red {
+  color: #ff6b6b;
+  border-color: rgba(255, 107, 107, 0.3);
+}
+
+.trend-green {
+  color: #51cf66;
+  border-color: rgba(81, 207, 102, 0.3);
+}
+
+.trend-yellow {
+  color: #ffd43b;
+  border-color: rgba(255, 212, 59, 0.3);
+}
+
+.trend-teal {
+  color: #22d3ee;
+  border-color: rgba(34, 211, 238, 0.3);
+}
+
+.trend-blue {
+  color: #60a5fa;
+  border-color: rgba(96, 165, 250, 0.3);
+}
+
+.trend-purple {
+  color: #c084fc;
+  border-color: rgba(192, 132, 252, 0.3);
+}
+
+.trend-orange {
+  color: #fb923c;
+  border-color: rgba(251, 146, 60, 0.3);
+}
+
+.trend-gray {
+  color: var(--color-text-secondary);
+  border-color: rgba(174, 176, 181, 0.3);
+}
+
+.stat-label {
+  font-size: 0.938rem;
+  color: var(--color-text-secondary);
+  margin: 0;
+  font-weight: 500;
+  letter-spacing: 0.01em;
+}
+
+.stat-value {
+  font-size: 2.5rem;
+  font-weight: 800;
+  color: var(--color-text-primary);
+  margin: 0;
+  letter-spacing: -0.02em;
+  line-height: 1;
+  transition: all 0.4s ease;
+}
+
+.stat-card:hover .stat-value {
+  transform: scale(1.05);
+  color: var(--color-primary);
+  text-shadow: 0 0 20px rgba(157, 238, 43, 0.4);
+}
+
+/* Responsive */
+@media (max-width: 1400px) {
+  .stats-grid {
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  }
+}
+
+@media (max-width: 1024px) {
+  .admin-dashboard-main {
+    padding: 2rem;
+  }
+
+  .dashboard-glass-container {
+    padding: 2rem;
+  }
+
+  .dashboard-title {
+    font-size: 2rem;
+  }
+
+  .stats-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 768px) {
+  .admin-dashboard-main {
+    padding: 1.5rem;
+  }
+
+  .dashboard-glass-container {
+    padding: 1.5rem;
+  }
+
+  .dashboard-header {
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .dashboard-title {
+    font-size: 1.75rem;
+  }
+
+  .stats-grid {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+
+  .stat-card {
+    padding: 1.25rem;
+  }
+
+  .stat-value {
+    font-size: 2rem;
+  }
+}

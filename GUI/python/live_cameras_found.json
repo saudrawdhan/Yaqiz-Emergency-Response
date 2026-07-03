@@ -1,0 +1,108 @@
+{
+  "working_cameras": [
+    {
+      "id": "1",
+      "name": "Tokyo Shibuya Crossing - Live",
+      "location": "Tokyo, Japan",
+      "youtube_id": "GlHXLP1VtZQ",
+      "url": "https://www.youtube.com/watch?v=GlHXLP1VtZQ",
+      "lat": 35.6595,
+      "lng": 139.7004,
+      "type": "pedestrian_crossing",
+      "status": "online",
+      "embed_url": "https://www.youtube.com/embed/GlHXLP1VtZQ?autoplay=1&mute=1&controls=1"
+    },
+    {
+      "id": "2",
+      "name": "Times Square NYC - Live",
+      "location": "New York, USA",
+      "youtube_id": "mDqTZM4ljvQ",
+      "url": "https://www.youtube.com/watch?v=mDqTZM4ljvQ",
+      "lat": 40.758,
+      "lng": -73.9855,
+      "type": "city_traffic",
+      "status": "online",
+      "embed_url": "https://www.youtube.com/embed/mDqTZM4ljvQ?autoplay=1&mute=1&controls=1"
+    },
+    {
+      "id": "3",
+      "name": "Los Angeles Traffic - Live",
+      "location": "Los Angeles, USA",
+      "youtube_id": "tF6MQ8mZk-M",
+      "url": "https://www.youtube.com/watch?v=tF6MQ8mZk-M",
+      "lat": 34.0522,
+      "lng": -118.2437,
+      "type": "highway_traffic",
+      "status": "online",
+      "embed_url": "https://www.youtube.com/embed/tF6MQ8mZk-M?autoplay=1&mute=1&controls=1"
+    },
+    {
+      "id": "4",
+      "name": "London Traffic - Live",
+      "location": "London, UK",
+      "youtube_id": "7Nj9ZjwC9Ug",
+      "url": "https://www.youtube.com/watch?v=7Nj9ZjwC9Ug",
+      "lat": 51.5074,
+      "lng": -0.1278,
+      "type": "city_center",
+      "status": "online",
+      "embed_url": "https://www.youtube.com/embed/7Nj9ZjwC9Ug?autoplay=1&mute=1&controls=1"
+    },
+    {
+      "id": "5",
+      "name": "San Francisco Bay Bridge - Live",
+      "location": "San Francisco, USA",
+      "youtube_id": "U7bFiZqRoic",
+      "url": "https://www.youtube.com/watch?v=U7bFiZqRoic",
+      "lat": 37.7983,
+      "lng": -122.3778,
+      "type": "bridge_traffic",
+      "status": "online",
+      "embed_url": "https://www.youtube.com/embed/U7bFiZqRoic?autoplay=1&mute=1&controls=1"
+    }
+  ],
+  "additional_streams": [
+    {
+      "name": "Dubai Marina - Live",
+      "youtube_id": "nDQf3ZReBpM",
+      "location": "Dubai, UAE",
+      "lat": 25.0807,
+      "lng": 55.1349
+    },
+    {
+      "name": "Hong Kong Traffic - Live",
+      "youtube_id": "XwJBZXwvYYM",
+      "location": "Hong Kong",
+      "lat": 22.3193,
+      "lng": 114.1694
+    },
+    {
+      "name": "Istanbul Bridge - Live",
+      "youtube_id": "2_1dqOJCbcY",
+      "location": "Istanbul, Turkey",
+      "lat": 41.0082,
+      "lng": 28.9784
+    }
+  ],
+  "aggregators": [
+    {
+      "name": "Skyline Webcams",
+      "url": "https://www.skylinewebcams.com/en/webcam.html",
+      "description": "Thousands of live webcams worldwide, embeddable",
+      "api": false
+    },
+    {
+      "name": "Webcam-HD",
+      "url": "https://www.webcam-hd.tv/",
+      "description": "High quality webcams, many with embed codes",
+      "api": false
+    },
+    {
+      "name": "See.cam",
+      "url": "https://www.see.cam/",
+      "description": "Public camera directory with RTSP streams",
+      "api": false
+    }
+  ],
+  "total_count": 8
+}

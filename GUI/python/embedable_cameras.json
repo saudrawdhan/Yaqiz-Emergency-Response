@@ -1,0 +1,117 @@
+{
+  "skyline_webcams": [
+    {
+      "id": "CAM-001",
+      "name": "Tokyo Shibuya Crossing",
+      "location": "Tokyo, Japan",
+      "embed_url": "https://embed.skylinewebcams.com/embed.html?webid=1641896364",
+      "lat": 35.6595,
+      "lng": 139.7004,
+      "provider": "Skyline Webcams",
+      "status": "online"
+    },
+    {
+      "id": "CAM-002",
+      "name": "Times Square New York",
+      "location": "New York, USA",
+      "embed_url": "https://embed.skylinewebcams.com/embed.html?webid=1548091446",
+      "lat": 40.758,
+      "lng": -73.9855,
+      "provider": "Skyline Webcams",
+      "status": "online"
+    },
+    {
+      "id": "CAM-003",
+      "name": "London Piccadilly Circus",
+      "location": "London, UK",
+      "embed_url": "https://embed.skylinewebcams.com/embed.html?webid=1546527726",
+      "lat": 51.5099,
+      "lng": -0.1337,
+      "provider": "Skyline Webcams",
+      "status": "online"
+    },
+    {
+      "id": "CAM-004",
+      "name": "Dubai Marina",
+      "location": "Dubai, UAE",
+      "embed_url": "https://embed.skylinewebcams.com/embed.html?webid=1542110164",
+      "lat": 25.0807,
+      "lng": 55.1349,
+      "provider": "Skyline Webcams",
+      "status": "online"
+    },
+    {
+      "id": "CAM-005",
+      "name": "Venice Italy",
+      "location": "Venice, Italy",
+      "embed_url": "https://embed.skylinewebcams.com/embed.html?webid=1402755430",
+      "lat": 45.4408,
+      "lng": 12.3155,
+      "provider": "Skyline Webcams",
+      "status": "online"
+    }
+  ],
+  "google_drive_cameras": [
+    {
+      "id": "CAM-001-RUH",
+      "name": "King Fahd Road @ Olaya Junction",
+      "location": "King Fahd Road, Olaya District, Riyadh",
+      "coordinates": {
+        "latitude": 24.7136,
+        "longitude": 46.6753
+      },
+      "videoUrl": "https://drive.google.com/file/d/17w9Fuzg7y4dKK6bYfB_G70d4MKUuMm1R/preview",
+      "status": "online",
+      "provider": "Google Drive"
+    },
+    {
+      "id": "CAM-002-RUH",
+      "name": "Northern Ring Road @ Exit 7",
+      "location": "Northern Ring Road, Exit 7, Riyadh",
+      "coordinates": {
+        "latitude": 24.7736,
+        "longitude": 46.7381
+      },
+      "videoUrl": "https://drive.google.com/file/d/1xFzLZpN0JPl3kCmDHBCPhIQreuPgPZka/preview",
+      "status": "online",
+      "provider": "Google Drive"
+    },
+    {
+      "id": "CAM-003-RUH",
+      "name": "King Abdullah Road @ Al Muruj",
+      "location": "King Abdullah Road, Al Muruj District",
+      "coordinates": {
+        "latitude": 24.6901,
+        "longitude": 46.6697
+      },
+      "videoUrl": "https://drive.google.com/file/d/1A17vcq9RPbV-OlLwEjdTGnyZfqRtgCHD/preview",
+      "status": "online",
+      "provider": "Google Drive"
+    },
+    {
+      "id": "CAM-004-RUH",
+      "name": "Eastern Ring Road @ Airport Junction",
+      "location": "Eastern Ring Road, Near Airport",
+      "coordinates": {
+        "latitude": 24.7208,
+        "longitude": 46.8028
+      },
+      "videoUrl": "https://drive.google.com/file/d/1_jxfSP6VJ7tQzlZ51pNX5deUgGy70_6s/preview",
+      "status": "online",
+      "provider": "Google Drive"
+    },
+    {
+      "id": "CAM-005-RUH",
+      "name": "Makkah Road @ Diplomatic Quarter",
+      "location": "Makkah Road, Diplomatic Quarter",
+      "coordinates": {
+        "latitude": 24.6913,
+        "longitude": 46.6182
+      },
+      "videoUrl": "https://drive.google.com/file/d/1MYt68Jp6tap5LXIQ2nkqeJzFsN1SU9BG/preview",
+      "status": "online",
+      "provider": "Google Drive"
+    }
+  ],
+  "recommendation": "google_drive"
+}
