@@ -2,11 +2,11 @@
 
 # Harnessing Deep Learning to Optimize Emergency Response
 
-An AI system that detects road accidents from live CCTV feeds in real time, classifies their severity, and automatically alerts the nearest emergency responders. Graduation project for the Bachelor of Science in Artificial Intelligence, Imam Abdulrahman Bin Faisal University (ARTI 521).
+An AI system that detects road accidents from CCTV video in real time, classifies their severity, and automatically alerts the nearest emergency responders. Graduation project for the Bachelor of Science in Artificial Intelligence, Imam Abdulrahman Bin Faisal University (ARTI 521).
 
 ## What it does
 
-- Ingests CCTV video continuously and processes it autonomously, with no manual triggering.
+- Ingests camera video continuously and processes it autonomously, with no manual triggering. The dashboard demo runs on real, periodically-refreshed public traffic-camera footage (London's TfL network) as a stand-in for the local traffic-camera access a production deployment would use.
 - A three-stage AI pipeline detects an accident, classifies it, and drafts a structured incident report.
 - Routes alerts to the correct emergency agency (hospital, police, Najm, civil defense) via Telegram.
 - Role-based dashboards give administrators and first responders distinct, secure views.

@@ -1,7 +1,6 @@
 # Emergency Response Command Platform - Project Structure
 
-## Overview
-A comprehensive command-and-control platform for emergency response management with AI-powered accident detection, real-time incident monitoring, and multi-agency collaboration.
+See [README.md](README.md) for an overview of what the platform does.
 
 ## Technology Stack
 - **Frontend**: React 18.2 with TypeScript
