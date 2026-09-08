@@ -1,157 +1,89 @@
-![Test](./images/Harnessing%20Deep%20Learning%20to%20Optimize%20Emergency%20Response.png)
+![Harnessing Deep Learning to Optimize Emergency Response — project banner](./images/Harnessing%20Deep%20Learning%20to%20Optimize%20Emergency%20Response.png)
 
 # Harnessing Deep Learning to Optimize Emergency Response
 
-An AI-powered system for automatic accident detection from live traffic camera feeds to reduce emergency response times.
+An AI system that detects road accidents from live CCTV feeds in real time, classifies their severity, and automatically alerts the nearest emergency responders. Graduation project for the Bachelor of Science in Artificial Intelligence, Imam Abdulrahman Bin Faisal University (ARTI 521).
 
-## Team Members
+## What it does
 
-| # | Name | Role |
-|---|------|----|
-| 1 | Mohammed Kamal Hadi | Leader |
-| 2 | Abdulrhman Mohammed Alshehri | Member |
-| 3 | Saud Ali Rawdhan | Member |
-| 4 | Ahmad Abdulqader Alakhdar | Member |
-| 5 | Ali Ibrahim Asiri | Member |
+- Ingests CCTV video continuously and processes it autonomously, with no manual triggering.
+- A three-stage AI pipeline detects an accident, classifies it, and drafts a structured incident report.
+- Routes alerts to the correct emergency agency (hospital, police, Najm, civil defense) via Telegram.
+- Role-based dashboards give administrators and first responders distinct, secure views.
+- Displays each incident's location on a live map and exports a formatted incident PDF for field commanders.
 
-**Supervised by:** Dr. Mohammad Aftab Alam Khan (Supervisor) and Dr. Atta-ur-Rahman (Co-supervisor)
+## Architecture
 
-**Committee Members:** Dr. Ito Wasio and Dr. Rabab Alkhalifa
+The final system runs three sequential AI stages, each doing the part it's actually good at:
 
-## First Semester (August 2025 - December 2025)
+| Stage | Model | Role |
+|---|---|---|
+| 1 — Spatial detection | Dual-stream YOLO11n (COCO-pretrained + CADP fine-tuned) | Detects and localizes vehicles, pedestrians, and road infrastructure per frame |
+| 2 — Temporal classification | VideoViT v4 (VideoMAE-base backbone) | Analyzes a 16-frame window and decides accident / no accident |
+| 3 — Semantic triage | Qwen2.5-VL-7B | Writes a structured incident report: severity, vehicle types, and recommended response |
 
-### Work Completed
+Stage 2 is the core classifier. It fuses the two YOLO detection streams into the video transformer through an alpha-gated cross-attention mechanism, so the model reasons about accidents using explicit object positions rather than raw pixels alone.
 
-The first semester focused on planning, requirements gathering, and system design:
+## Results
 
-#### Phase 1: Project Initiation & Proposal (Aug 31 - Sep 18, 2025)
-- Proposal approval
-- Team planning and role assignment
-- Initial project scope definition
+Measured on a 587-clip validation set (303 normal, 284 accident; drawn from CADP, TU-DAT, and ACCIDENT-picekl, stratified 80/20 split, seed 42):
 
-#### Phase 2: Literature Review (Sep 21 - Oct 2, 2025)
-- Thorough examination of past research
-- Review of current accident detection technologies
-- Analysis of existing solutions and their limitations
+| Metric | Value | Target |
+|---|---|---|
+| F1-score | **0.888** | ≥ 0.85 |
+| Precision | 0.944 | ≥ 0.85 |
+| Recall | 0.838 | ≥ 0.80 |
+| Accuracy | 0.90 | ≥ 0.85 |
+| Classification latency (Stage 2, CPU/ONNX) | 41.2 ms/clip | — |
 
-#### Phase 3: Project Plan & Mid-Semester Report (Oct 5 - Oct 16, 2025)
-- Software Project Management Plan (SPMP) creation
-- Work plan development
-- Mid-semester report submission
+Every target set for the project is met or exceeded. The reported latency covers Stage 2 only (Stage 1 detection and Stage 3 triage add to end-to-end time, which was not formally benchmarked). This 587-clip set is the training-time validation split, fixed before training began; no separate post-training test set was defined for the project.
 
-#### Phase 4: System Requirements Specification (Oct 19 - Oct 30, 2025)
-- Gathering and analyzing system requirements
-- Defining functional and non-functional requirements
-- Documentation of requirements in SRS format
+Fusing explicit object-detection data with the video transformer is what drove the result: a pure temporal baseline (VideoMAE, no detection tokens) reached F1 0.826, while adding the YOLO detection-token stream raised it to 0.888 and pushed precision from 0.88 to 0.944 — fewer false alerts, which matters for a system that pages real emergency responders.
 
-#### Phase 5: System Design Specification (Nov 2 - Nov 13, 2025)
-- Architecture design
-- Data flow specification
-- Technical design documentation
+## How the model got here
 
-#### Phase 6: Final Design & Report Writing (Nov 16 - Dec 11, 2025)
-- Design finalization
-- First semester final report writing
-- Documentation completion
+Two earlier architectures were tried and superseded before landing on the final design:
 
-#### Phase 7: Final Presentation (Dec 14 - Dec 18, 2025)
-- Presentation preparation
-- Final presentation delivery
+| Model | Approach | Outcome |
+|---|---|---|
+| EfficientNet-B0 | Single-frame classifier | Up to F1 0.897, but a 33% false-positive rate — fog and spray were consistently misread as post-collision smoke. No temporal context, a structural ceiling. |
+| TimeSformer + ByteTrack | 8-frame video transformer, plus a parallel physics-based collision tracker | F1 0.88, but TimeSformer's fixed architecture couldn't accept the YOLO detection-token fusion the project needed. The physics tracker's deceleration threshold also failed on 69% of accident clips that had no measurable pre-collision braking. |
+| **VideoViT v4** | VideoMAE + dual-stream YOLO tokens, alpha-gated cross-attention | **F1 0.888 — adopted as the production model.** |
 
-### Summary
+**A real training failure and how it was handled:** the original design included a severity classification head trained jointly with the accident detector. Training collapsed (NaN) at epoch 18 because only ~18% of clips carried severity labels, and the imbalance destabilized the shared loss. The fix was to drop the severity head, keep the epoch-15 checkpoint saved just before the collapse as the production model, and move severity classification to Stage 3 (Qwen2.5-VL-7B) instead — a language model handles the ambiguous, low-data judgment call better than a starved classification head.
 
-The first semester established the project foundation through comprehensive planning, requirements analysis, and detailed system design. Key deliverables included:
-- Project proposal and approval
-- Literature review
-- Software Project Management Plan (SPMP)
-- System Requirements Specification (SRS)
-- System Design Specification (SDS)
-- Final report and presentation
+## Tech stack
 
-## Second Semester (January 2026 - June 2026)
+- **Detection:** YOLO11n, dual-stream (COCO-pretrained + fine-tuned on CADP)
+- **Temporal classification:** VideoViT v4 (VideoMAE-base), PyTorch — trained on an A100 40GB (Google Colab), exported to ONNX (347MB → 2MB via graph optimization and quantization) for CPU inference
+- **Semantic triage:** Qwen2.5-VL-7B
+- **Backend / data:** Supabase (PostgreSQL, RPC-driven incident lifecycle, real-time updates)
+- **Notifications:** Telegram Bot API
+- **Frontend:** React + TypeScript, Leaflet for live incident maps, PDF export for field reports
+- **Deployment:** Netlify (frontend)
 
-### Planned Work
+## Limitations and future work
 
-The second semester will focus on implementation, testing, deployment, and final presentation:
+- Not yet validated against live municipal CCTV feeds — testing so far is on benchmark datasets, not an operational deployment.
+- Recall on the accident class (0.838) leaves room to grow; the likely gap is underrepresented conditions such as rural highways, severe weather, and night-time pedestrian incidents.
+- The AI stages run in the cloud; porting them to edge hardware (e.g., NVIDIA Jetson) was not attempted.
+- Automated emergency-vehicle rerouting was in the original proposal but was descoped: the delivered system notifies responders and shows incident location on a map, but does not compute or transmit alternate routes automatically. This needs a live traffic-data integration and dispatch-fleet GPS feed that were out of scope for a single-semester project.
 
-#### Week 1: Documentation (Jan 18, 2026)
-- Documentation of examiners' feedback from first semester
-- Review and address committee recommendations
+## Team and academic context
 
-#### Weeks 2-8: Implementation Phase (Jan 25 - Mar 29, 2026)
-- Development of a multi-path accident detection pipeline: EfficientNet-B0 (frame classifier), TimeSformer (video ViT, F1=0.88), and YOLO11+ByteTrack (physics-informed tracker)
-- Implementation of real-time video processing with scale-invariant collision detection (BH/s²)
-- Training on the CADP dataset (230 videos, 10,313 annotated frames)
-- Development of a VLM triage module using Qwen2.5-VL-7B-AWQ for structured emergency reports
-- Development of the alert dashboard using React/TypeScript and Supabase
-- Integration of all system components into a unified pipeline
-- Bi-weekly progress reports (Reports #1, #2, #3, #4)
-- **Midterm Report Submission:** March 29, 2026
+Built over two semesters (August 2025 – June 2026) as a five-person graduation project at Imam Abdulrahman Bin Faisal University (ARTI 521). Full semester reports and the final presentation are in [`docs/`](docs).
 
-#### Weeks 9-12: Testing Phase (Apr 5 - Apr 26, 2026)
-- Unit testing of individual components
-- Integration testing of the complete system
-- Performance testing for real-time detection latency
-- Validation against target metrics (85%+ precision/recall/F1-score, sub-2-second latency)
-- Testing with various weather conditions and camera angles
-- Bi-weekly progress reports (Reports #5, #6)
+| Name | Role |
+|---|---|
+| Mohammed Kamal Hadi | Leader |
+| Abdulrhman Mohammed Alshehri | Member |
+| Saud Ali Rawdhan | Member |
+| Ahmad Abdulqader Alakhdar | Member |
+| Ali Ibrahim Asiri | Member |
 
-#### Weeks 13-15: Deployment Phase (May 3 - May 17, 2026)
-- End-user deployment and configuration
-- User manual preparation
-- Installation guide creation
-- System operation and maintenance documentation
-- Project showcase participation (May 3-18, 2026)
-- Final report writing and submission
-- Bi-weekly progress report (Report #7)
-- **Final Report Submission:** May 17, 2026
-
-#### Weeks 16-19: Final Presentation (May 19 - June 23, 2026)
-- Presentation preparation
-- Final project demonstration
-- Oral presentation to faculty committee
-- **Presentation Period:** May 19 - June 23, 2026
-
-### Bi-Weekly Progress Reports
-Throughout the semester, the team will submit seven bi-weekly progress reports documenting:
-- Work completed during the period
-- Challenges encountered and solutions implemented
-- Plans for the next reporting period
-- Alignment with project timeline and objectives
-
-### Technologies and Tools
-- **Programming Language:** Python
-- **Deep Learning Framework:** PyTorch
-- **Models:** EfficientNet-B0, TimeSformer, YOLOv11, Qwen2.5-VL-7B-AWQ (INT4)
-- **Object Tracking:** ByteTrack with height-normalized velocity (BH/s²)
-- **Video Processing:** OpenCV, Decord
-- **Dashboard:** React 18 / TypeScript (Vite), Supabase
-- **Compute:** Google Colab Pro (T4 GPU, 15.6 GB VRAM)
-- **Version Control:** Git/GitHub
-- **Collaboration:** Microsoft Teams, Google Drive
-
-### Target Deliverables
-- Bi-weekly progress reports (7 reports)
-- Midterm report (March 29, 2026)
-- Fully functional accident detection system
-- Trained model with optimized weights
-- Alert dashboard interface
-- Complete system documentation
-- User manual and installation guide
-- System operation and maintenance guide
-- Final report (May 17, 2026)
-- Project showcase demonstration (May 3-18, 2026)
-- Final presentation (May 19 - June 23, 2026)
-- Source code repository on GitHub
-
-## Project Timeline
-
-**Overall Duration:** August 31, 2025 - June 23, 2026
-
-- **First Semester (Aug 2025 - Dec 2025):** Planning, requirements, and design
-- **Second Semester (Jan 2026 - Jun 2026):** Implementation, testing, deployment, and presentation
+**Supervised by:** Dr. Mohammad Aftab Alam Khan (Supervisor), Dr. Atta-ur-Rahman (Co-supervisor)
+**Committee:** Dr. Ito Wasio, Dr. Rabab Alkhalifa
 
 ## License
 
-This project is submitted in partial fulfillment of the requirements for the degree of Bachelor of Science in Artificial Intelligence at Imam Abdulrahman Bin Faisal University.
-
+This project was submitted in partial fulfillment of the Bachelor of Science in Artificial Intelligence at Imam Abdulrahman Bin Faisal University. It is shared here as portfolio material; as a multi-author academic project, no open-source license is granted and no part of it may be reused without permission from the team.
