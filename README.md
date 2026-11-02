@@ -2,7 +2,7 @@
 
 # Harnessing Deep Learning to Optimize Emergency Response
 
-An AI system that detects road accidents from CCTV video in real time, classifies their severity, and automatically alerts the nearest emergency responders. Graduation project for the Bachelor of Science in Artificial Intelligence, Imam Abdulrahman Bin Faisal University (ARTI 521).
+An AI system that detects road accidents in traffic video, classifies their severity, and alerts emergency teams. Graduation project for the Bachelor of Science in Artificial Intelligence, Imam Abdulrahman Bin Faisal University (ARTI 521).
 
 ## What it does
 
@@ -48,7 +48,7 @@ Two earlier architectures were tried and superseded before landing on the final 
 |---|---|---|
 | EfficientNet-B0 | Single-frame classifier | Up to F1 0.897, but a 33% false-positive rate — fog and spray were consistently misread as post-collision smoke. No temporal context, a structural ceiling. |
 | TimeSformer + ByteTrack | 8-frame video transformer, plus a parallel physics-based collision tracker | F1 0.88, but TimeSformer's fixed architecture couldn't accept the YOLO detection-token fusion the project needed. The physics tracker's deceleration threshold also failed on 69% of accident clips that had no measurable pre-collision braking. |
-| **VideoViT v4** | VideoMAE + dual-stream YOLO tokens, alpha-gated cross-attention | **F1 0.888 — adopted as the production model.** |
+| **VideoViT v4** | VideoMAE + dual-stream YOLO tokens, alpha-gated cross-attention | **F1 0.888, adopted as the final model.** |
 
 **A real training failure and how it was handled:** the original design included a severity classification head trained jointly with the accident detector. Training collapsed (NaN) at epoch 18 because only ~18% of clips carried severity labels, and the imbalance destabilized the shared loss. The fix was to drop the severity head, keep the epoch-15 checkpoint saved just before the collapse as the production model, and move severity classification to Stage 3 (Qwen2.5-VL-7B) instead — a language model handles the ambiguous, low-data judgment call better than a starved classification head.
 
